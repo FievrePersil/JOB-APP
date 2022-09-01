@@ -53,7 +53,7 @@ app.listen(3001, (req, res)=>{
 
 router.post("/user", asyncHandler(async(req, res)=>{
     const { id, name, lastName, email, password, company, type } = req.body
-    console.log(password)
+    
     //hash the password
     //salt is a bcrypt fucntion to encrypt the hashedpassword
     const salt = await bcrypt.genSalt(10)
@@ -62,16 +62,15 @@ router.post("/user", asyncHandler(async(req, res)=>{
     try {
         await user.save();
         console.log('user '+name+ ' inserted!');
-        res.json({inserted: true})
         const token = jwt.sign({
             id
         }, process.env.JWT_SECRET, {
             expiresIn: "30d"
         });
-        res.json({token: token});
+        res.json({token: token, inserted: true})
     } catch (err) {
         console.log(err);
-        res.json({inserted: false});
+        res.json({inserted: false})
     }
 }))
 
@@ -234,6 +233,17 @@ router.post('/contact', async(req, res)=>{
     } catch (error) {
         console.log(error.message)
         res.json({message: "Sorry your message couldn't be sent try again later!"})
+    }
+})
+
+router.get('/allinfos', async(req, res)=>{
+    try {
+        const user = await User.find({})
+        const job = await Job.find({}).populate('user').exec()
+        const proposal = await Proposal.find({}).populate('job').populate('user').exec();
+        res.json({user: user, job: job, proposal, proposal})
+    } catch (err) {
+        console.log(err.message)
     }
 })
 
