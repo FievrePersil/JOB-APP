@@ -1,7 +1,7 @@
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Index from './Index'
-import Contact from './Contact'
+import Contact from './Contact';
 import Register from './Register';
 import Login from './Login'
 import PrivateRoutes from './PrivateRoutes';
