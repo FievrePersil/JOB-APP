@@ -238,10 +238,11 @@ router.post('/contact', async(req, res)=>{
 
 router.get('/allinfos', async(req, res)=>{
     try {
-        const user = await User.find({})
-        const job = await Job.find({}).populate('user').exec()
-        const proposal = await Proposal.find({}).populate('job').populate('user').exec();
-        res.json({user: user, job: job, proposal, proposal})
+        const Employer = await User.find({type: "Employer"})
+        const Employee = await User.find({type: "Employee"})
+        const jobp = await Job.find({}).populate('user').exec()
+        const proposal = await Proposal.find({}).populate('user').populate('job').exec()
+        res.json({employer: Employer, employee: Employee, jobp: jobp, proposal: proposal})
     } catch (err) {
         console.log(err.message)
     }
