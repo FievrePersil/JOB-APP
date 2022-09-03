@@ -301,13 +301,14 @@ router.post('/contact', async(req, res)=>{
     }
 })
 
+//get all the database infos for the admin
 router.get('/allinfos', async(req, res)=>{
     try {
-        const Employer = await User.find({type: "Employer"})
-        const Employee = await User.find({type: "Employee"})
-        const jobp = await Job.find({}).populate('user').exec()
-        const proposal = await Proposal.find({}).populate('user').populate('job').exec()
-        res.json({employer: Employer, employee: Employee, jobp: jobp, proposal: proposal})
+        const employer = await Employer.find({})
+        const employee = await Employee.find({})
+        const job = await Job.find({}).populate('employer').exec()
+        const proposal = await Proposal.find({}).populate('employer').populate('job').populate('employee').exec()
+        res.json({employer: employer, employee: employee, job: job, proposal: proposal})
     } catch (err) {
         console.log(err.message)
     }

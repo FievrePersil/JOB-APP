@@ -16,7 +16,7 @@ const Users = () =>{
                 setEmployees(data.employee)
                 setEmployers(data.employer)
                 setProposals(data.proposal)
-                setJobs(data.jobp)
+                setJobs(data.job)
             }
         } catch (err) {
             console.log(err.message)
@@ -30,7 +30,7 @@ const Users = () =>{
     return (
 <div>
   {/* table employers */}
-  <h3 id="user" className="mt-3">EMPLOYERS: ({employers.length} Employers)</h3>
+  <h3 id="user" className="mt-3">EMPLOYERS: ({employers.length} Employer(s))</h3>
 <table  className="table">
   <thead>
     <tr>
@@ -59,7 +59,7 @@ const Users = () =>{
 </table>
 
 {/* table employees */}
-<h3 className="mt-5">EMPLOYEES: ({employees.length} Employees)</h3>
+<h3 className="mt-5">EMPLOYEES: ({employees.length} Employee(s))</h3>
 <table className="table">
   <thead>
     <tr>
@@ -88,7 +88,7 @@ const Users = () =>{
 
 
 {/* table Jobs */}
-<h3 className="mt-5">JOBS: ({jobs.length} Jobs)</h3>
+<h3 className="mt-5">JOBS: ({jobs.length} Job(s))</h3>
 <table className="table">
   <thead>
     <tr>
@@ -104,10 +104,10 @@ const Users = () =>{
     {jobs.map(job =>(
         <tr  className="align-middle table-info" key={job._id}>
         <th className="text-capitalize text-success" scope="row"> {job.jobtitle}</th>
-        <td className="text-capitalize">{job.user.name} {job.user.lastname}</td>
+        <td className="text-capitalize">{job.employer.name} {job.employer.lastname}</td>
         <td>{job.salary}$</td>
         <td className="w-25">{job.schedule}</td>
-        <td className="text-capitalize">{job.user.company}</td>
+        <td className="text-capitalize">{job.employer.company}</td>
         <td className="text-center table-danger"><button type="button" class="btn btn-danger">Delete</button></td>
       </tr>
     ))}
@@ -116,7 +116,7 @@ const Users = () =>{
 </table>
 
 {/* table Proposals */}
-<h3 className="mt-5">PROPOSALS: ({proposals.length} Proposals)</h3>
+<h3 className="mt-5">PROPOSALS: ({proposals.length} Proposal(s))</h3>
 <table className="table">
   <thead>
     <tr>
@@ -131,7 +131,7 @@ const Users = () =>{
   <tbody>
     {proposals.map(proposal =>(
         <tr  className="align-middle table-info" key={proposal._id}>
-        <th className="text-capitalize text-success" scope="row"> {proposal.user.name} {proposal.user.lastname}</th>
+        <th className="text-capitalize text-success" scope="row"> {proposal.employee.name} {proposal.employee.lastname}</th>
         <td className="text-capitalize">{proposal.job.jobtitle} </td>
         <td>{proposal.startin}</td>
         <td>{proposal.age}</td>
