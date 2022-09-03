@@ -30,7 +30,7 @@ const Users = () =>{
     return (
 <div>
   {/* table employers */}
-  <h3 id="user" className="mt-3">Employers:</h3>
+  <h3 id="user" className="mt-3">EMPLOYERS: ({employers.length} Employers)</h3>
 <table  className="table">
   <thead>
     <tr>
@@ -44,13 +44,13 @@ const Users = () =>{
   </thead>
   <tbody>
     {employers.map(employer =>(
-        <tr className="align-middle" key={employer._id}>
+        <tr className="align-middle table-info" key={employer._id}>
         <th scope="row"> #{employer.id} </th>
         <td className="text-capitalize">{employer.name}</td>
         <td className="text-capitalize">{employer.lastname}</td>
         <td className="w-25">{employer.email}</td>
         <td className="text-capitalize">{employer.company}</td>
-        <td className="text-center"><button type="button" class="btn btn-danger">Delete</button></td>
+        <td className="text-center table-danger"><button type="button" class="btn btn-danger">Delete</button></td>
 
       </tr>
     ))}
@@ -59,7 +59,7 @@ const Users = () =>{
 </table>
 
 {/* table employees */}
-<h3 className="mt-5">Employees:</h3>
+<h3 className="mt-5">EMPLOYEES: ({employees.length} Employees)</h3>
 <table className="table">
   <thead>
     <tr>
@@ -73,13 +73,13 @@ const Users = () =>{
   </thead>
   <tbody>
     {employees.map(employee =>(
-        <tr  className="align-middle" key={employee._id}>
+        <tr  className="align-middle table-info" key={employee._id}>
         <th scope="row"> #{employee.id} </th>
         <td className="text-capitalize">{employee.name}</td>
         <td>{employee.lastname}</td>
         <td className="w-25">{employee.email}</td>
         <td className="text-capitalize">None</td>
-        <td className="text-center"><button type="button" class="btn btn-danger">Delete</button></td>
+        <td className="text-center table-danger"><button type="button" class="btn btn-danger">Delete</button></td>
       </tr>
     ))}
   
@@ -88,7 +88,7 @@ const Users = () =>{
 
 
 {/* table Jobs */}
-<h3 className="mt-5">Jobs:</h3>
+<h3 className="mt-5">JOBS: ({jobs.length} Jobs)</h3>
 <table className="table">
   <thead>
     <tr>
@@ -102,13 +102,13 @@ const Users = () =>{
   </thead>
   <tbody>
     {jobs.map(job =>(
-        <tr  className="align-middle" key={job._id}>
+        <tr  className="align-middle table-info" key={job._id}>
         <th className="text-capitalize text-success" scope="row"> {job.jobtitle}</th>
         <td className="text-capitalize">{job.user.name} {job.user.lastname}</td>
         <td>{job.salary}$</td>
         <td className="w-25">{job.schedule}</td>
         <td className="text-capitalize">{job.user.company}</td>
-        <td className="text-center"><button type="button" class="btn btn-danger">Delete</button></td>
+        <td className="text-center table-danger"><button type="button" class="btn btn-danger">Delete</button></td>
       </tr>
     ))}
   
@@ -116,7 +116,7 @@ const Users = () =>{
 </table>
 
 {/* table Proposals */}
-<h3 className="mt-5">PROPOSALS:</h3>
+<h3 className="mt-5">PROPOSALS: ({proposals.length} Proposals)</h3>
 <table className="table">
   <thead>
     <tr>
@@ -130,13 +130,13 @@ const Users = () =>{
   </thead>
   <tbody>
     {proposals.map(proposal =>(
-        <tr  className="align-middle" key={proposal._id}>
+        <tr  className="align-middle table-info" key={proposal._id}>
         <th className="text-capitalize text-success" scope="row"> {proposal.user.name} {proposal.user.lastname}</th>
         <td className="text-capitalize">{proposal.job.jobtitle} </td>
         <td>{proposal.startin}</td>
         <td>{proposal.age}</td>
         <td className="w-25">{proposal.propemail}</td>
-        <td className="text-center"><button type="button" class="btn btn-danger">Delete</button></td>
+        <td className="text-center table-danger"><button type="button" class="btn btn-danger">Delete</button></td>
       </tr>
     ))}
   

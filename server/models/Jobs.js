@@ -1,4 +1,4 @@
-const { required } = require('joi');
+const { required, date } = require('joi');
 const mongoose = require ('mongoose')
 
 
@@ -23,11 +23,15 @@ const job = new mongoose.Schema({
         type: String,
         required: true
     },
-    user:{
+    employer:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
+        ref: "employer",
         unique: true,
         required: true
+    },
+    date:{
+        type: String,
+        required: true,
     },
 });
 

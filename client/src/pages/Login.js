@@ -7,11 +7,12 @@ const Login = () =>{
     const [id, setId] = useState('')
     const [password, setPassword] = useState('')
     const [data, setData] = useState('')
+    const [type, setType]= useState('')
 
     const LoginUSer = async(e) =>{
         e.preventDefault();
         try {
-          const body = { id, password }
+          const body = { id, password, type }
           const response = await fetch('http://localhost:3001/login',{
             method: "POST",
             headers: { "Content-type": "application/json" },
@@ -65,7 +66,21 @@ const Login = () =>{
         <div className="container">
         <div className="mx-auto text-center wow fadeInUp" data-wow-delay="0.1s" style= 
         {{maxWidth: 600}}>
-          <div className="d-inline-block border rounded-pill text-primary px-4 mb-5">Login</div>
+
+          <h2 className="text-primary">Login As:</h2>
+
+
+<div className='mt-3 ms-2 mb-5'>
+<div className="form-check form-check-inline">
+<input onChange={(e)=>{setType(e.target.value)}} className="form-check-input" type="radio" id="inlineCheckbox1" name='user' value={"Employer"} required />
+<label className="form-check-label" htmlFor="inlineCheckbox1"><h6>Employer</h6></label>
+</div>
+<div className="form-check form-check-inline">
+<input onChange={(e)=>{setType(e.target.value)}} className="form-check-input" type="radio" id="inlineCheckbox2" name='user' value={"Employee"} required />
+<label className="form-check-label " htmlFor="inlineCheckbox2"><h6>Employee</h6></label>
+</div>
+</div>
+
          <Alert />
           <form onSubmit={LoginUSer}>
           <div className="col-12 mb-3">

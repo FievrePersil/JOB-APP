@@ -26,9 +26,14 @@ const proposal = new mongoose.Schema({
         type: String,
         required: true
     },
-    user:{
+    employer:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
+        ref: "employer",
+        required: true
+    },
+    employee:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "employee",
         required: true
     },
     job:{

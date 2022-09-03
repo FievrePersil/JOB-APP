@@ -146,19 +146,36 @@ const Jobs = ()=>{
     return <div>
          
          {jobs.map(job => (
-          <div className="container border border-primary border-2 rounded mb-5" key={job._id}>
-            
+          
+          <div className="container border border-primary border-2 rounded mb-5 row" key={job._id}>
+                      <div className="col-lg-3  wow fadeInUp mt-4" data-wow-delay="0.3s">
+          <div className="team-item ">
+            <h5 className="text-capitalize"> {job.employer.name} {job.employer.lastname} </h5>
+            <p className="mb-4 text-capitalize">{job.employer.company} Company</p>
+            <img className="img-fluid rounded-circle w-100 mb-4" src="img/avatar.jpg"  />
+            <div className="d-flex justify-content-center">
+              <a className="btn btn-square text-secondary bg-white m-1" href><i className="fab fa-facebook-f" /></a>
+              <a className="btn btn-square text-secondary bg-white m-1" href><i className="fab fa-twitter" /></a>
+              <a className="btn btn-square text-secondary bg-white m-1" href><i className="fab fa-linkedin-in" /></a>
+            </div>
+          </div>
+        </div>
+        <div className="col">
               <h2 className="mt-3 text-center">{job.jobtitle}</h2>
-              <h6 className="mt-5 ms-3 text-nowrap d-flex">Created by Mr/Mrs: <p className="ms-2 text-success text-capitalize"> {job.user.name} {job.user.lastname}</p></h6>
-              <h6 className="mt-2 ms-3 text-nowrap d-flex">Owner of: <p className="ms-2 text-success">{job.user.company} Company</p></h6>
+              
+              <h6 className="mt-5 ms-3 text-nowrap d-flex">Posted In: <p className="ms-2 text-danger text-capitalize"> {job.date}</p></h6>
+  
+              <h6 className="mt-2 ms-3 text-nowrap d-flex">Owner of: <p className="ms-2 text-success">{job.employer.company} Company</p></h6>
               <h6 className="mt-2 ms-3 text-nowrap d-flex">Schedule: <p className="ms-2 text-success"> {job.schedule}</p></h6>
               <h6 className="mt-2 ms-3 text-nowrap d-flex">Salary budget: <p className="ms-2 text-success"> {job.salary}$</p></h6>
-              <h6 className="mt-2 ms-3 text-nowrap d-flex">Company E-mail: <p className="ms-2 text-success"> {job.jobemail}$</p></h6>
+              <h6 className="mt-2 ms-3 text-nowrap d-flex">Company E-mail: <p className="ms-2 text-success"> {job.jobemail}</p></h6>
               <h6 className="mt-2 ms-3 d-flex text-nowrap">Job description: <p className="ms-2 d-flex text-wrap text-success"> <span>{job.aboutjob}</span></p></h6>
               <div className=" d-flex justify-content-center">
               <button onClick={()=>{setMyValue(job._id)}}  type="button" class="btn btn-outline-success mb-3 mt-3" style={{width: 500}}>Start writting a proposal!</button>
               </div>
+              </div>
               <ProposalForm id = {job._id} />
+              
           </div>
 
           

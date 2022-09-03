@@ -15,7 +15,7 @@ function Employee(){
     const type = "Employee";
     try {
       const body = { id, name, lastName, email, password, type }
-      const response = await fetch('http://localhost:3001/user',{
+      const response = await fetch('http://localhost:3001/employee',{
           method: "POST",
           headers: { "Content-type": "application/json" },
           body: JSON.stringify(body)

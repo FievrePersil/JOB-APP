@@ -1,7 +1,7 @@
 const mongoose = require ('mongoose')
 
 
-const user = new mongoose.Schema({
+const employee = new mongoose.Schema({
     id:{
         type: String,
         required: true,
@@ -24,9 +24,6 @@ const user = new mongoose.Schema({
         type: String,
         required: true
     },
-    company:{
-        type: String,
-    },
     type:{
         type: String,
         required: true
@@ -34,5 +31,5 @@ const user = new mongoose.Schema({
 });
 
 
-const User = mongoose.model("user", user)
-module.exports = User
+const Employee = mongoose.model("employee", employee)
+module.exports = Employee

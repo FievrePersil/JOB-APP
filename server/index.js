@@ -9,7 +9,8 @@ const bcrypt = require('bcryptjs')
 var cors = require('cors')
 const app = express()
 //importing the user model (you have to import it here in order to see it on the mongodb)
-const User = require('./models/User');
+const Employee = require('./models/Employee')
+const Employer = require('./models/Employer')
 const Job = require('./models/Jobs');
 const Proposal = require('./models/proposal')
 const Contact = require('./models/Contact')
@@ -50,18 +51,43 @@ app.listen(3001, (req, res)=>{
 })
 
 
-
-router.post("/user", asyncHandler(async(req, res)=>{
+//register an employer
+router.post("/employer", asyncHandler(async(req, res)=>{
     const { id, name, lastName, email, password, company, type } = req.body
     
     //hash the password
     //salt is a bcrypt fucntion to encrypt the hashedpassword
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt);
-    const user = new User ({id: id, name: name, lastname: lastName, email: email, pass: hashedPassword, company: company, type: type});
+    const employer = new Employer ({id: id, name: name, lastname: lastName, email: email, pass: hashedPassword, company: company, type: type});
     try {
-        await user.save();
-        console.log('user '+name+ ' inserted!');
+        await employer.save();
+        console.log('employer '+name+ ' inserted!');
+        const token = jwt.sign({
+            id
+        }, process.env.JWT_SECRET, {
+            expiresIn: "30d"
+        });
+        res.json({token: token, inserted: true})
+    } catch (err) {
+        console.log(err);
+        res.json({inserted: false})
+    }
+}))
+
+
+//register an employee
+router.post("/employee", asyncHandler(async(req, res)=>{
+    const { id, name, lastName, email, password, type } = req.body
+    
+    //hash the password
+    //salt is a bcrypt fucntion to encrypt the hashedpassword
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const employee = new Employee ({id: id, name: name, lastname: lastName, email: email, pass: hashedPassword, type: type});
+    try {
+        await employee.save();
+        console.log('employee '+name+ ' inserted!');
         const token = jwt.sign({
             id
         }, process.env.JWT_SECRET, {
@@ -103,13 +129,14 @@ router.get('/isUSerAuth', verifyJwt, async(req, res)=>{
 
 
 router.post('/login', async(req, res)=>{
-    const { id, password } = req.body;
+    const { id, password, type } = req.body;
+    if(type ==="Employer"){
     try {
-        //check for user email
-        const user = await User.findOne({id: id})
-        if(!user) res.json({message: "Invalid ID#"})
+        //check for user id
+        const employer = await Employer.findOne({id: id})
+        if(!employer) res.json({message: "Invalid ID#"})
         //bcrypt.compare to check and compare the hashed password
-        if(user && (await bcrypt.compare(password, user.pass))){
+        if(employer && (await bcrypt.compare(password, employer.pass))){
             
             const token = jwt.sign({
                 id,
@@ -119,13 +146,39 @@ router.post('/login', async(req, res)=>{
             console.log(token)
             res.json({auth: true, message: "logged in succesfully", token: token})
             sess = req.session
-            sess.userid = user.id;
+            sess.userid = employer.id;
+            sess.usertype = type
         }else{
             res.status(400)
             res.json({auth: false, message: "Invalid ID# or password!"})
         }
     } catch (err) {
         console.error(err.message)
+    }}else{
+        try {
+            //check for user id
+            const employee = await Employee.findOne({id: id})
+            if(!employee) res.json({message: "Invalid ID#"})
+            //bcrypt.compare to check and compare the hashed password
+            if(employee && (await bcrypt.compare(password, employee.pass))){
+                
+                const token = jwt.sign({
+                    id,
+                }, process.env.JWT_SECRET, {
+                    expiresIn: "30d",
+                })
+                console.log(token)
+                res.json({auth: true, message: "logged in succesfully", token: token})
+                sess = req.session
+                sess.userid = employee.id;
+                sess.usertype = type
+            }else{
+                res.status(400)
+                res.json({auth: false, message: "Invalid ID# or password!"})
+            }
+        } catch (err) {
+            console.error(err.message)
+        }
     }
 })
 
@@ -133,23 +186,35 @@ router.post('/login', async(req, res)=>{
 
 //to get the data of the user logged in
 router.get("/users", async(req, res)=>{
-    try {
-        const session = sess;
-        const user = await User.findOne({id: session.userid})
-        if(!user) res.json({message: "Invalid ID#"})
-        res.json({usersid: user.id, company: user.company, name: user.name, lastname: user.lastname, type: user.type});
-    } catch (err) {
-        console.log(err.message)
-    }
-    
+    const session = sess;
+    if(session.usertype === "Employer"){
+        try {
+            const employer = await Employer.findOne({id: session.userid});
+            if(!employer) res.json({message: "Invalid ID#"})
+            res.json({usersid: employer.id, company: employer.company, name: employer.name, lastname: employer.lastname, type: employer.type});
+        } catch (err) {
+            console.log(err.message)
+        }
+    }else{
+        try {
+            const employee = await Employee.findOne({id: session.userid})
+            if(!employee) res.json({message: "Invalid ID#"})
+            res.json({usersid: employee.id, name: employee.name, lastname: employee.lastname, type: employee.type});
+        } catch (err) {
+            console.log(err.message)
+        }
+    } 
 })
 
 router.post('/job', async(req, res)=>{
     const session = sess;
     //find the current user through the session
-    const user = await User.findOne({id: session.userid})
+    const employer = await Employer.findOne({id: session.userid})
     const { jobTitle, salary, email, time, description } = req.body;
-    const job = new Job({jobtitle: jobTitle, salary: salary, jobemail: email, schedule: time, aboutjob: description, user: user})
+    //to get the current date
+    const d = new Date()
+    //toLocalString transforms the date into a string and changes its format
+    const job = new Job({jobtitle: jobTitle, salary: salary, jobemail: email, schedule: time, aboutjob: description, employer: employer, date: d.toLocaleString()})
     try {
         await job.save()
         res.json({message: "Congratulations! your job has been posted", posted: true})
@@ -176,7 +241,7 @@ router.delete('/logout', async(req,res) => {
 router.get("/getjobs", async(req, res)=>{
 
     try {
-        const jobs = await Job.find({}).populate('user').exec();
+        const jobs = await Job.find({}).populate('employer').exec();
         if(!jobs){
             res.json({message: "Failed to load Jobs"});
         }
@@ -194,10 +259,10 @@ router.post('/proposal', async(req, res)=>{
     const session = sess;
     const userid = session.userid
     const { phone, age, gender, email, time, description, jobid } = req.body;
-    const job = await Job.findOne({_id: jobid})
-    const user = await User.findOne({id: userid})
+    const job = await Job.findOne({_id: jobid}).populate('employer').exec()
+    const employee = await Employee.findOne({id: userid})
     try {
-        const proposal = new Proposal ({propemail: email, phone: phone, gender: gender, startin: time, age: age, description: description, job: job, user: user})
+        const proposal = new Proposal ({propemail: email, phone: phone, gender: gender, startin: time, age: age, description: description, job: job, employee: employee, employer: job.employer._id})
         await proposal.save();
         res.json({message: "Congratulations! your proposal has been sent!"});
     } catch (err) {
@@ -210,12 +275,12 @@ router.post('/proposal', async(req, res)=>{
 router.get('/getproposal', async(req, res)=>{
     try {
         const session = sess;
-        const user = await User.findOne({id: session.userid})
-        const id = user._id
-        const job = await Job.findOne({user: id})
+        const employer = await Employer.findOne({id: session.userid})
+        const id = employer._id
+        const job = await Job.findOne({employer: id})
         const idjob = job._id
 
-        const proposal = await Proposal.find({job: idjob}).populate('job').populate('user').exec();
+        const proposal = await Proposal.find({job: idjob}).populate('job').populate('employer').populate('employee').exec();
         if(proposal){
         res.json({proposal: proposal, prop: true})}
     } catch (error) {

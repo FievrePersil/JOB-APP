@@ -35,14 +35,21 @@ const Register = () =>{
         <div className="mx-auto text-center wow fadeInUp" data-wow-delay="0.1s" style= 
         {{maxWidth: 600}}>
           
-          <div className="d-inline-block border rounded-pill text-primary px-4 mb-2">Sign Up 
-          As</div>
-          <select onChange={(e)=>{setMyValue(e.target.value)}} className="form-select" aria-label="Default select example">
-        
-          <option value="false">Employer</option>
-          <option value="true">Employee</option>
-          </select>
-          <h2 className="mb-5 mt-4">Sign Up</h2>
+
+
+          <h2 className="text-primary">Sign As:</h2>
+
+
+          <div className='mt-3 ms-2 mb-5'>
+  <div className="form-check form-check-inline">
+    <input onChange={(e)=>{setMyValue(e.target.value)}} className="form-check-input" type="radio" id="inlineCheckbox1" name='user' value={"false"} required />
+    <label className="form-check-label" htmlFor="inlineCheckbox1"><h6>Employer</h6></label>
+  </div>
+  <div className="form-check form-check-inline">
+    <input onChange={(e)=>{setMyValue(e.target.value)}} className="form-check-input" type="radio" id="inlineCheckbox2" name='user' value={"true"} required />
+    <label className="form-check-label " htmlFor="inlineCheckbox2"><h6>Employee</h6></label>
+  </div>
+</div>
           </div>
           <div>
           <Choice value={ value } />
