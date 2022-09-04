@@ -23,6 +23,22 @@ const Users = () =>{
         }
     }
 
+
+    //delete employer
+    const DeleteEmployer = async(id) =>{
+      try {
+        const body = {id}
+        const response = await fetch('http://localhost:3001/delemployer', {
+          headers: { "Content-type": "application/json" },
+          method: "DELETE",
+          body: JSON.stringify(body)
+        });
+        const data = await response.json()
+        alert(data.message)
+      } catch (err) {
+        console.log(err.message)
+      }
+    }
     useEffect(()=>{
         getUsers()
       }, [])
@@ -50,7 +66,7 @@ const Users = () =>{
         <td className="text-capitalize">{employer.lastname}</td>
         <td className="w-25">{employer.email}</td>
         <td className="text-capitalize">{employer.company}</td>
-        <td className="text-center table-danger"><button type="button" class="btn btn-danger">Delete</button></td>
+        <td className="text-center table-danger"><button type="button" class="btn btn-danger" onClick={()=>DeleteEmployer(employer._id)}>Delete</button></td>
 
       </tr>
     ))}

@@ -314,7 +314,46 @@ router.get('/allinfos', async(req, res)=>{
     }
 })
 
+//delete an employer
+router.delete('/delemployer', async(req, res)=>{
+    try {
+        const { id } = req.body
+        await Job.find({employer: id}).deleteMany({})
+        await Proposal.find({employer: id}).deleteMany({})
+        await Employer.findOneAndRemove({_id: id})
+        res.json({message: "employer is deleted"})
+    } catch (err) {
+        console.log(err.message)
+        res.json({message: "employer is not deleted"});
+    }
+})
 
+
+//delete an employee
+router.delete('/delemployee', async(req, res)=>{
+    try {
+        const { id } = req.body
+        await Proposal.find({employee: id}).remove()
+        await Employee.findOneAndRemove({_id: id})
+        res.json({message: "employee is deleted"})
+    } catch (err) {
+        console.log(err.message)
+        res.json({message: "employee is not deleted"});
+    }
+})
+
+//delete a job
+router.delete('/deljob', async(req, res)=>{
+    try {
+        const { id } = req.body
+        await Proposal.find({job: id}).remove()
+        await Job.findOneAndRemove({_id: id})
+        res.json({message: "job is deleted"})
+    } catch (err) {
+        console.log(err.message)
+        res.json({message: "job is not deleted"});
+    }
+})
 
 
 
