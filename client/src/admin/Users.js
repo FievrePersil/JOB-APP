@@ -39,6 +39,57 @@ const Users = () =>{
         console.log(err.message)
       }
     }
+
+        //delete employee
+        const DeleteEmployee = async(id) =>{
+          try {
+            const body = {id}
+            const response = await fetch('http://localhost:3001/delemployee', {
+              headers: { "Content-type": "application/json" },
+              method: "DELETE",
+              body: JSON.stringify(body)
+            });
+            const data = await response.json()
+            alert(data.message)
+          } catch (err) {
+            console.log(err.message)
+          }
+        }
+
+
+               //delete job
+               const DeleteJob = async(id) =>{
+                try {
+                  const body = {id}
+                  const response = await fetch('http://localhost:3001/deljob', {
+                    headers: { "Content-type": "application/json" },
+                    method: "DELETE",
+                    body: JSON.stringify(body)
+                  });
+                  const data = await response.json()
+                  alert(data.message)
+                } catch (err) {
+                  console.log(err.message)
+                }
+              }
+
+              //delete proposal
+              const DeleteProposal = async(id) =>{
+                try {
+                  const body = {id}
+                  const response = await fetch('http://localhost:3001/delproposal', {
+                    headers: { "Content-type": "application/json" },
+                    method: "DELETE",
+                    body: JSON.stringify(body)
+                  });
+                  const data = await response.json()
+                  alert(data.message)
+                } catch (err) {
+                  console.log(err.message)
+                }
+              }
+
+
     useEffect(()=>{
         getUsers()
       }, [])
@@ -95,7 +146,7 @@ const Users = () =>{
         <td>{employee.lastname}</td>
         <td className="w-25">{employee.email}</td>
         <td className="text-capitalize">None</td>
-        <td className="text-center table-danger"><button type="button" class="btn btn-danger">Delete</button></td>
+        <td className="text-center table-danger"><button type="button" class="btn btn-danger" onClick={()=>DeleteEmployee(employee._id)}>Delete</button></td>
       </tr>
     ))}
   
@@ -124,7 +175,7 @@ const Users = () =>{
         <td>{job.salary}$</td>
         <td className="w-25">{job.schedule}</td>
         <td className="text-capitalize">{job.employer.company}</td>
-        <td className="text-center table-danger"><button type="button" class="btn btn-danger">Delete</button></td>
+        <td className="text-center table-danger"><button type="button" class="btn btn-danger" onClick={()=>DeleteJob(job._id)}>Delete</button></td>
       </tr>
     ))}
   
@@ -152,7 +203,7 @@ const Users = () =>{
         <td>{proposal.startin}</td>
         <td>{proposal.age}</td>
         <td className="w-25">{proposal.propemail}</td>
-        <td className="text-center table-danger"><button type="button" class="btn btn-danger">Delete</button></td>
+        <td className="text-center table-danger"><button type="button" class="btn btn-danger" onClick={()=>DeleteProposal(proposal._id)}>Delete</button></td>
       </tr>
     ))}
   

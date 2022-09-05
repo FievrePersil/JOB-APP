@@ -333,7 +333,7 @@ router.delete('/delemployer', async(req, res)=>{
 router.delete('/delemployee', async(req, res)=>{
     try {
         const { id } = req.body
-        await Proposal.find({employee: id}).remove()
+        await Proposal.find({employee: id}).deleteMany({})
         await Employee.findOneAndRemove({_id: id})
         res.json({message: "employee is deleted"})
     } catch (err) {
@@ -346,12 +346,24 @@ router.delete('/delemployee', async(req, res)=>{
 router.delete('/deljob', async(req, res)=>{
     try {
         const { id } = req.body
-        await Proposal.find({job: id}).remove()
+        await Proposal.find({job: id}).deleteMany({})
         await Job.findOneAndRemove({_id: id})
         res.json({message: "job is deleted"})
     } catch (err) {
         console.log(err.message)
         res.json({message: "job is not deleted"});
+    }
+})
+
+//delete a proposal
+router.delete('/delproposal', async(req, res)=>{
+    try {
+        const { id } = req.body
+        await Proposal.findOneAndRemove({_id: id})
+        res.json({message: "proposal is deleted"})
+    } catch (err) {
+        console.log(err.message)
+        res.json({message: "proposal is not deleted"});
     }
 })
 
