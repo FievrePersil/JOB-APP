@@ -72,12 +72,12 @@ const Login = () =>{
 
 <div className='mt-3 ms-2 mb-5'>
 <div className="form-check form-check-inline">
-<input onChange={(e)=>{setType(e.target.value)}} className="form-check-input" type="radio" id="inlineCheckbox1" name='user' value={"Employer"} required />
-<label className="form-check-label" htmlFor="inlineCheckbox1"><h6>Employer</h6></label>
+<input onChange={(e)=>{setType(e.target.value)}} className="form-check-input" style={{height: "25px", width: "25px"}} type="radio" id="inlineCheckbox1" name='user' value={"Employer"} required />
+<label className="form-check-label" htmlFor="inlineCheckbox1"><h3 className="ms-1">Employer</h3></label>
 </div>
 <div className="form-check form-check-inline">
-<input onChange={(e)=>{setType(e.target.value)}} className="form-check-input" type="radio" id="inlineCheckbox2" name='user' value={"Employee"} required />
-<label className="form-check-label " htmlFor="inlineCheckbox2"><h6>Employee</h6></label>
+<input onChange={(e)=>{setType(e.target.value)}} className="form-check-input" style={{height: "25px", width: "25px"}} type="radio" id="inlineCheckbox2" name='user' value={"Employee"} required />
+<label className="form-check-label " htmlFor="inlineCheckbox2"><h3 className="ms-1">Employee</h3></label>
 </div>
 </div>
 

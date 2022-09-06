@@ -4,6 +4,7 @@ import JobForm from "../components/jobForm";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Jobs from "../components/jobs";
+import { PencilSquare } from "react-bootstrap-icons"
 
 const Profile = () =>{
     const navigate = useNavigate()
@@ -90,6 +91,11 @@ const Profile = () =>{
           :
           <HashLink to="#jobs" className="nav-item nav-link">Jobs</HashLink>
         }
+            {
+          isEmployer ? <Link to="/jobs" className="nav-item nav-link">My Jobs</Link>
+          :
+          <p></p>
+        }
 
         
         <Link to="/contact" className="nav-item nav-link">Contact</Link>
@@ -104,23 +110,33 @@ const Profile = () =>{
         <div className="container-xxl bg-primary page-header">
             
         <div className="container">
-            
-        <div className="col-lg-1 col-md-5 wow fadeInUp align-items-center d-flex" data-wow-delay="0.7s">
+        {
+          isEmployer ?
+          <div className="col-lg-4 col-md-5 position-absolute end-0 top-0" style={{marginRight:"3%"}}>
+          <img style={{ marginTop:"40%"}} className="img-fluid" src="img/employee.png" alt />
+          </div> :
+          <div className="col-lg-4 col-md-5 position-absolute end-0 top-0" style={{marginRight: "3%"}}>
+          <img style={{marginTop: "28%"}} className="img-fluid" src="img/hero2.png" alt />
+          </div>
+        }
+       
+        <div className="col-lg-1 col-md-5 wow fadeInUp align-items-center d-flex text-lg-start" data-wow-delay="0.7s">
+        
         <img alt="avatar" className="img-fluid rounded-circle mb-3 ms-2" src="img/avatar.jpg" />
-        <h1 className="text-white animated zoomIn text-capitalize mb-2 ms-3 text-nowrap"> {name+" "+lastname} <span className="h6">(#{id}) </span></h1>
-
+        <h1 className="text-white animated zoomIn text-capitalize mb-2 ms-3 text-nowrap"> {name+" "+lastname} <span className="h6">(#{id})  </span><PencilSquare className="ms-2" style={{height: "30px"}}/></h1>
+        
         </div>
+       
         <h4 className="text-white mb-2">{type}</h4>
         {
-          isEmployer ?  <h4>Company: <span className="text-white">{company}</span></h4> : <h4 className="mb-0 mt-3">Searching for a job? <br /> Go down and start checking for availble jobs!</h4>
+          isEmployer ?  <h4>Company: <span className="text-white">{company}</span></h4> : <h4 className="mb-3 mt-5">Searching for a job? <br /> Go down and start checking for availble jobs!</h4>
         }
         
         {
           isEmployer ? <h4 className="mb-0 mt-5">Searching for Employees? <HashLink to={"#form"} onClick={(e)=>{setMyValue("on")}} className=" mlbtn btn-dark rounded-pill text-primary py-2 px-4">Post Job!  </HashLink></h4> : <p></p>
         }
+       
         
-        
-
         </div>
         </div>
         <div className="container-xxl py-5" id="register">
