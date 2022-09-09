@@ -13,6 +13,7 @@ import Dashboard from '../admin/Dashboard';
 import AdminLogin from '../admin/AdminLogin';
 import AdminRoute from '../admin/AdminRoute';
 
+
 function App () {
 
 
@@ -61,6 +62,7 @@ function App () {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/404" element={<Err404 />} />
           <Route path="/contact" element={<Contact />} />
+          
           
           </Routes>
           </BrowserRouter>

@@ -11,7 +11,6 @@ function Employer(){
   const [isInserted, setInserted] = useState()
 
   const SubmitEmployer = async(e)=>{
-    
     //e.preventDefault() prevents the page from refreshing everytime i submit the form
     e.preventDefault();
     const type = "Employer";
@@ -75,7 +74,7 @@ function Employer(){
             </div>
             <div className="col-12">
               {
-                isInserted ? <div class="alert alert-success text-center" role="alert">
+                isInserted ? <div class="alert alert-secondary text-center" role="alert">
                 Account created, <Link to="/login">Login</Link> now!
               </div> : 
               <div>

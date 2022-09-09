@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Jobs from "../components/jobs";
 import { PencilSquare } from "react-bootstrap-icons"
+import Modify from './ModifyProfile'
 
 const Profile = () =>{
     const navigate = useNavigate()
@@ -116,14 +117,14 @@ const Profile = () =>{
           <img style={{ marginTop:"40%"}} className="img-fluid" src="img/employee.png" alt />
           </div> :
           <div className="col-lg-4 col-md-5 position-absolute end-0 top-0" style={{marginRight: "3%"}}>
-          <img style={{marginTop: "28%"}} className="img-fluid" src="img/hero2.png" alt />
+          <img style={{marginTop: "42%"}} className="img-fluid" src="img/employee.png" alt />
           </div>
         }
        
         <div className="col-lg-1 col-md-5 wow fadeInUp align-items-center d-flex text-lg-start" data-wow-delay="0.7s">
         
         <img alt="avatar" className="img-fluid rounded-circle mb-3 ms-2" src="img/avatar.jpg" />
-        <h1 className="text-white animated zoomIn text-capitalize mb-2 ms-3 text-nowrap"> {name+" "+lastname} <span className="h6">(#{id})  </span><PencilSquare className="ms-2" style={{height: "30px"}}/></h1>
+        <h1 className="text-white animated zoomIn text-capitalize mb-2 ms-3 text-nowrap"> {name+" "+lastname} <span className="h6">(#{id})  </span><Modify /></h1>
         
         </div>
        

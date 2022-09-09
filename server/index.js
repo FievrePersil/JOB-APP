@@ -100,6 +100,11 @@ router.post("/employee", asyncHandler(async(req, res)=>{
     }
 }))
 
+router.post('/updateuser', async(req,res)=>{
+    const session = sess
+
+})
+
 
 const verifyJwt = async(req, res, next)=>{
     let token = req.headers["x-access-token"]
