@@ -100,9 +100,41 @@ router.post("/employee", asyncHandler(async(req, res)=>{
     }
 }))
 
-router.post('/updateuser', async(req,res)=>{
+//updating a user
+router.put('/updateuser', async(req,res)=>{
     const session = sess
-
+    const {id, newName, newLastName, newPassword} = req.body
+    try {
+        if(session.usertype === "Employer"){
+                if(newName.length !== 0){
+                    await Employer.findOneAndUpdate({id: id}, {name: newName});
+                    console.log("name updated")
+                }if(newLastName.length !== 0){
+                    await Employer.findOneAndUpdate({id: id}, {lastname: newLastName});
+                    console.log("lastname updated")
+                }if(newPassword.length !== 0){
+                    const salt = await bcrypt.genSalt(10)
+                    const hashedPassword = await bcrypt.hash(newPassword, salt);
+                    await Employer.findOneAndUpdate({id: id}, {pass: hashedPassword});
+                    console.log("password updated")
+                }
+        }else{
+            if(newName.length !== 0){
+                await Employee.findOneAndUpdate({id: id}, {name: newName});
+                console.log("name updated")
+            }if(newLastName.length !== 0){
+                await Employee.findOneAndUpdate({id: id}, {lastname: newLastName});
+                console.log("lastname updated")
+            }if(newPassword.length !== 0){
+                const salt = await bcrypt.genSalt(10)
+                const hashedPassword = await bcrypt.hash(newPassword, salt);
+                await Employee.findOneAndUpdate({id: id}, {pass: hashedPassword});
+                console.log("password updated")
+            }
+        }
+    } catch (err) {
+        console.log(err.message)
+    }
 })
 
 
@@ -196,7 +228,7 @@ router.get("/users", async(req, res)=>{
         try {
             const employer = await Employer.findOne({id: session.userid});
             if(!employer) res.json({message: "Invalid ID#"})
-            res.json({usersid: employer.id, company: employer.company, name: employer.name, lastname: employer.lastname, type: employer.type});
+            res.json({usersid: employer.id, company: employer.company, name: employer.name, lastname: employer.lastname, type: employer.type, pass: employer.pass});
         } catch (err) {
             console.log(err.message)
         }
@@ -204,13 +236,14 @@ router.get("/users", async(req, res)=>{
         try {
             const employee = await Employee.findOne({id: session.userid})
             if(!employee) res.json({message: "Invalid ID#"})
-            res.json({usersid: employee.id, name: employee.name, lastname: employee.lastname, type: employee.type});
+            res.json({usersid: employee.id, name: employee.name, lastname: employee.lastname, type: employee.type, pass: employee.pass});
         } catch (err) {
             console.log(err.message)
         }
     } 
 })
 
+//Save a job
 router.post('/job', async(req, res)=>{
     const session = sess;
     //find the current user through the session
@@ -230,19 +263,9 @@ router.post('/job', async(req, res)=>{
     res.end();
 })
 
-router.delete('/logout', async(req,res) => {
-    try {
-        sess = undefined
-        console.log(sess)
-        res.status(200).json({code: 200, message: 'loggedout', session1: sess})
-    } catch (err) {
-        console.log(err)
-    }
-    res.end()
-    
-})
 
 
+//get out all jobs
 router.get("/getjobs", async(req, res)=>{
 
     try {
@@ -259,7 +282,7 @@ router.get("/getjobs", async(req, res)=>{
     
 })
 
-//add proposal router
+//add a proposal
 router.post('/proposal', async(req, res)=>{
     const session = sess;
     const userid = session.userid
@@ -303,6 +326,18 @@ router.post('/contact', async(req, res)=>{
     } catch (error) {
         console.log(error.message)
         res.json({message: "Sorry your message couldn't be sent try again later!"})
+    }
+})
+
+//get the jobs of the current employer
+router.get('/jobs', async(req, res)=>{
+    const session = sess
+    try {
+        const employer = await Employer.findOne({id: session.userid})
+        const jobs = await Job.find({employer: employer})
+        res.json({jobs: jobs});
+    } catch (err) {
+        console.log(err.message)
     }
 })
 

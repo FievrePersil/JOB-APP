@@ -12,6 +12,7 @@ import Proposals from './Proposals';
 import Dashboard from '../admin/Dashboard';
 import AdminLogin from '../admin/AdminLogin';
 import AdminRoute from '../admin/AdminRoute';
+import Jobs from './Jobs';
 
 
 function App () {
@@ -57,6 +58,12 @@ function App () {
           <Route path='/proposals' element={
                <PrivateRoutes>
                <Proposals />
+             </PrivateRoutes>
+          } />
+
+<Route path='/jobs' element={
+               <PrivateRoutes>
+               <Jobs />
              </PrivateRoutes>
           } />
           <Route path="/dashboard" element={<Dashboard />} />
