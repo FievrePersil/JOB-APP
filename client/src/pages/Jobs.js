@@ -9,6 +9,23 @@ const Jobs = () => {
     const [check, setCheck]= useState(false)
 
 
+
+    //delete a certain job
+    const DeleteJob = async(id) =>{
+        const body = {id}
+        try {
+            const response = await fetch('http://localhost:3001/deljob',{
+                method: 'DELETE',
+                body: JSON.stringify(body),
+                headers: { "Content-type": "application/json" },
+            });
+            const data = await response.json()
+            alert(data.message)
+        } catch (err) {
+            console.log(err.message)
+        }
+    }
+    //get the jobs of the current user
     const getJobs = async() =>{
         try {
             const response = await fetch('http://localhost:3001/jobs',{
@@ -73,6 +90,9 @@ const Jobs = () => {
               <h6 className="mt-2 ms-3 text-nowrap d-flex">Salary: <p className="ms-2 text-success">{job.salary}$</p></h6>
               <h6 className="mt-2 ms-3 text-nowrap d-flex">Schedule: <p className="ms-2 text-success">{job.schedule}</p></h6>
               <h6 className="mt-2 ms-3 d-flex text-nowrap">About Job<p className="ms-2 d-flex text-wrap text-success"> <span>{job.aboutjob}</span></p></h6>
+              <div className=" d-flex justify-content-center">
+              <button onClick={()=>DeleteJob(job._id)}  type="button" class="btn btn-outline-danger mb-3 mt-3" style={{width: 800}}>Delete Job</button>
+              </div>
           </div>
 
           

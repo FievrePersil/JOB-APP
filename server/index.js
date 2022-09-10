@@ -344,11 +344,12 @@ router.get('/jobs', async(req, res)=>{
 //get all the database infos for the admin
 router.get('/allinfos', async(req, res)=>{
     try {
+        const contact = await Contact.find({})
         const employer = await Employer.find({})
         const employee = await Employee.find({})
         const job = await Job.find({}).populate('employer').exec()
         const proposal = await Proposal.find({}).populate('employer').populate('job').populate('employee').exec()
-        res.json({employer: employer, employee: employee, job: job, proposal: proposal})
+        res.json({employer: employer, employee: employee, job: job, proposal: proposal, contact: contact})
     } catch (err) {
         console.log(err.message)
     }
@@ -404,6 +405,18 @@ router.delete('/delproposal', async(req, res)=>{
     } catch (err) {
         console.log(err.message)
         res.json({message: "proposal is not deleted"});
+    }
+})
+
+//delete a proposal
+router.delete('/delcontact', async(req, res)=>{
+    try {
+        const { id } = req.body
+        await Contact.findOneAndRemove({_id: id})
+        res.json({message: "Contact is deleted"})
+    } catch (err) {
+        console.log(err.message)
+        res.json({message: "Contact is not deleted"});
     }
 })
 

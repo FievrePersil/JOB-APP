@@ -1,4 +1,6 @@
 import React from "react"
+import { Link } from "react-router-dom"
+import { HashLink } from "react-router-hash-link"
 
 const footer = () =>{
     return (
@@ -22,16 +24,16 @@ const footer = () =>{
         </div>
       </div>
       <div className="col-md-6 col-lg-3">
-        <h5 className="text-white mb-4">Quick Link</h5>
-        <a className="btn btn-link" href="#about">About Us</a>
-        <a className="btn btn-link" href="/contact">Contact Us</a>
+        <h5 className="text-white mb-4">Quick Links</h5>
+        <HashLink className="btn btn-link" to={"/#about"}>About Us</HashLink>
+        <Link className="btn btn-link" to={"/contact"}>Contact Us</Link>
         <a className="btn btn-link" href>Privacy Policy</a>
         <a className="btn btn-link" href>Terms &amp; Condition</a>
         <a className="btn btn-link" href>Career</a>
       </div>
       <div className="col-md-6 col-lg-3">
         <h5 className="text-white mb-4">Popular Link</h5>
-        <a className="btn btn-link" href>About Us</a>
+        <HashLink className="btn btn-link" to={"/#about"}>About Us</HashLink>
         <a className="btn btn-link" href>Contact Us</a>
         <a className="btn btn-link" href>Privacy Policy</a>
         <a className="btn btn-link" href>Terms &amp; Condition</a>
@@ -51,8 +53,7 @@ const footer = () =>{
     <div className="copyright">
       <div className="row">
         <div className="col-md-6 text-center text-md-start mb-3 mb-md-0">
-          © <a className="border-bottom" href="/">TG.</a>, All Right Reserved. 
-          {/*/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. *** /*/}
+          © <a className="border-bottom" href="/">TG. </a> All Right Reserved. <br />
           Designed By Gharbi Tarek
           
         </div>
@@ -61,7 +62,7 @@ const footer = () =>{
             <a href>Home</a>
             <a href>Cookies</a>
             <a href>Help</a>
-            <a href>FQAs</a>
+
           </div>
         </div>
       </div>

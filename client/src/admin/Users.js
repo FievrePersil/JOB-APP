@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 
 const Users = () =>{
 
+    const [contacts, setContacts] = useState([])
     const [employees, setEmployees] = useState([])
     const [employers, setEmployers] = useState([])
     const [proposals, setProposals] = useState([])
@@ -17,6 +18,7 @@ const Users = () =>{
                 setEmployers(data.employer)
                 setProposals(data.proposal)
                 setJobs(data.job)
+                setContacts(data.contact)
             }
         } catch (err) {
             console.log(err.message)
@@ -78,6 +80,22 @@ const Users = () =>{
                 try {
                   const body = {id}
                   const response = await fetch('http://localhost:3001/delproposal', {
+                    headers: { "Content-type": "application/json" },
+                    method: "DELETE",
+                    body: JSON.stringify(body)
+                  });
+                  const data = await response.json()
+                  alert(data.message)
+                } catch (err) {
+                  console.log(err.message)
+                }
+              }
+
+              //delete proposal
+              const DeleteContact = async(id) =>{
+                try {
+                  const body = {id}
+                  const response = await fetch('http://localhost:3001/delcontact', {
                     headers: { "Content-type": "application/json" },
                     method: "DELETE",
                     body: JSON.stringify(body)
@@ -204,6 +222,35 @@ const Users = () =>{
         <td>{proposal.age}</td>
         <td className="w-25">{proposal.propemail}</td>
         <td className="text-center table-danger"><button type="button" class="btn btn-danger" onClick={()=>DeleteProposal(proposal._id)}>Delete</button></td>
+      </tr>
+    ))}
+  
+  </tbody>
+</table>
+
+  {/* table contacts */}
+  <h3 id="user" className="mt-3">MESSAGES: ({contacts.length} Contacts(s))</h3>
+<table  className="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Lastname</th>
+      <th scope="col">Email</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Message</th>
+      <th className="text-center text-danger" scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {contacts.map(contact =>(
+        <tr className="align-middle table-info" key={contact._id}>
+        <th scope="row" className="text-capitalize">{contact.name}</th>
+        <td className="text-capitalize">{contact.lastname}</td>
+        <td className="text-capitalize">{contact.email}</td>
+        <td className="w-25">{contact.subject}</td>
+        <td className="text-capitalize">{contact.message}</td>
+        <td className="text-center table-danger"><button type="button" class="btn btn-danger" onClick={()=>DeleteContact(contact._id)}>Delete</button></td>
+
       </tr>
     ))}
   
