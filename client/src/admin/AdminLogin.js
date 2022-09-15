@@ -7,14 +7,27 @@ const AdminLogin = () =>{
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [auth, setAuth] = useState(true)
-    const LoginAdmin = (e)=>{
+    
+
+    const LoginAdmin = async(e)=>{
         e.preventDefault()
-        if(username === "tarek" && password === "01021997"){
-            navigate('/dashboard')
-            localStorage.setItem("admin", username);
-            setAuth(true)
+        try {
+          const body = { username, password }
+          const response = await fetch('http://localhost:3001/admin',{
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify(body)
+        });
+        const data = await response.json()
+        if(data.auth === true){
+          setAuth(true)
+          localStorage.setItem("admin", data.username);
+          navigate('/dashboard')
         }else{
-            setAuth(false)
+          setAuth(false)
+        }
+        } catch (err) {
+          console.log(err.message)
         }
     }
 

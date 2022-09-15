@@ -14,6 +14,7 @@ const Employer = require('./models/Employer')
 const Job = require('./models/Jobs');
 const Proposal = require('./models/proposal')
 const Contact = require('./models/Contact')
+const Admin = require('./models/Admin')
 //call the .env file
 const path = require('path')
 require('dotenv').config()
@@ -27,7 +28,7 @@ const oneDay = 1000 * 60 * 60 * 24;
 
 //session middleware
 app.use(session({
-    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    secret: process.env.SESSION_KEY,
     saveUninitialized:true,
     cookie: { maxAge: oneDay },
     resave: false
@@ -36,7 +37,7 @@ app.use(session({
 app.use(express.json())
 app.use(cors())
 
-
+//connect to the database
 app.use(router)
 mongoose.connect(process.env.DB, {
     useNewUrlParser: true,
@@ -48,6 +49,22 @@ var sess
 
 app.listen(3001, (req, res)=>{
     console.log('running on 3001!')
+})
+
+
+//admin login
+router.post('/admin', async(req, res)=>{
+    const {username, password} = req.body
+    try {
+        const admin = await Admin.findOne({username: username, password: password})
+        if(admin){
+            res.json({auth: true, message: "logged in succesfully", username: username})
+        }else{
+            res.json({auth: false, message: "Invalid ID# or password!"})
+        }
+    } catch (err) {
+        console.log(err.message)
+    }
 })
 
 

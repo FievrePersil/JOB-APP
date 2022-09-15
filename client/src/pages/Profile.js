@@ -4,7 +4,6 @@ import JobForm from "../components/jobForm";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Jobs from "../components/jobs";
-import { PencilSquare } from "react-bootstrap-icons"
 import Modify from './ModifyProfile'
 
 const Profile = () =>{
@@ -73,7 +72,7 @@ const Profile = () =>{
 <div className="container-xxl position-relative p-0">
   <nav className="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
     <a href="/profile" className="navbar-brand p-0">
-      <h1 className="m-0">TG.</h1>
+      <h1 className="m-0">TG<span className="text-warning">.</span></h1>
       
     </a>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -114,10 +113,10 @@ const Profile = () =>{
         {
           isEmployer ?
           <div className="col-lg-4 col-md-5 position-absolute end-0 top-0" style={{marginRight:"3%"}}>
-          <img style={{ marginTop:"40%"}} className="img-fluid" src="img/employee.png" alt />
+          <img style={{ marginTop:"40%"}} className="img-fluid" src="img/employee.png"  alt="theme"/>
           </div> :
           <div className="col-lg-4 col-md-5 position-absolute end-0 top-0" style={{marginRight: "3%"}}>
-          <img style={{marginTop: "42%"}} className="img-fluid" src="img/employee.png" alt />
+          <img style={{marginTop: "42%"}} className="img-fluid" src="img/employee.png" alt="theme"/>
           </div>
         }
        
