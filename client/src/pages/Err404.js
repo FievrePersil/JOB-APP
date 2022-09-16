@@ -1,9 +1,16 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 
 
 
 const Err404 = () =>{
+
+
+  
+//set the title of the page
+useEffect(()=>{
+  document.title = "404 NOT FOUND";
+})
     return (
         <div>
     {/* 404 Start */}

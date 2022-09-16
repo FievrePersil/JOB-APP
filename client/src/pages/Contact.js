@@ -1,6 +1,5 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Footer from '../components/footer'
-import Navbar from "../components/navbar"
 import { HashLink } from "react-router-hash-link"
 const Contact = () =>{
 
@@ -27,6 +26,11 @@ const Contact = () =>{
         setOutput(data.message)
       }
     }
+
+    //set the title of the page
+    useEffect(()=>{
+      document.title = "Contact";
+    })
 
     return (
         

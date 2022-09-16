@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Navbar from '../components/navbar'
 import Employee from '../components/employee'
 import Employer from '../components/employer'
 import { Link } from 'react-router-dom'
 
 const Register = () =>{
+
+
+  //set the title of the page
+  useEffect(()=>{
+    document.title = "Sign Up";
+  })
 
     const [value, setMyValue] = useState()
 

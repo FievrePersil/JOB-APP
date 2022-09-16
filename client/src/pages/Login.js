@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from '../components/navbar'
 import { useNavigate, Link } from "react-router-dom";
 
@@ -20,7 +20,7 @@ const Login = () =>{
           });
           const data = await response.json()
           if(data.token){
-             navigate('/profile');
+             navigate(`/profile`);
              
              localStorage.setItem("token", data.token);
              
@@ -33,8 +33,10 @@ const Login = () =>{
     }
 
 
-
-    
+//set the title of the page
+    useEffect(()=>{
+      document.title = "Sign In";
+    })
     
 
 

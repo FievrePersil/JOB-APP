@@ -87,7 +87,7 @@ const SubmitJob =async(e)=>{
         </div>
         
         
-        <div className="col-12 mt-5">
+        <div className="col-12 mt-3">
             {checked ?
         <div class="alert alert-dark" role="alert">
   {message}

@@ -7,6 +7,7 @@ import Jobs from "../components/jobs";
 import Modify from './ModifyProfile'
 
 const Profile = () =>{
+  
     const navigate = useNavigate()
     const [value, setMyValue] = useState('')
 
@@ -62,6 +63,10 @@ const Profile = () =>{
       getUser()
     }, [])
 
+    //set the title of the page
+    useEffect(()=>{
+      document.title = name+" "+lastname;
+    })
 
 
     return (

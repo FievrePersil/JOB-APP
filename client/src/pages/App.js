@@ -15,8 +15,8 @@ import AdminRoute from '../admin/AdminRoute';
 import Jobs from './Jobs';
 
 
-function App () {
 
+function App () {
 
   
     return (
@@ -42,7 +42,7 @@ function App () {
                <Login />
              </PrivateRoute2>
           } />
-          <Route path='/profile' element={
+          <Route path="/profile" element={
                <PrivateRoutes>
                <Profile />
              </PrivateRoutes>
