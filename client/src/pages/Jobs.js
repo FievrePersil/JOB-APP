@@ -49,6 +49,11 @@ const Jobs = () => {
     useEffect(()=>{
         getJobs()
     }, [])
+    
+//set the title of the page
+useEffect(()=>{
+  document.title = "Jobs";
+})
 
     return(
         <>
