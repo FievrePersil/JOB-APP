@@ -85,10 +85,10 @@ router.post("/employer", asyncHandler(async(req, res)=>{
         }, process.env.JWT_SECRET, {
             expiresIn: "30d"
         });
-        res.json({token: token, inserted: true})
+        res.json({token: token, message: "your Account has been created"})
     } catch (err) {
         console.log(err);
-        res.json({inserted: false})
+        res.json({message: "Sorry! this ID is already taken"})
     }
 }))
 

@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
 function Employer(){
 
   const [id, setId] = useState('')
@@ -8,7 +7,8 @@ function Employer(){
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [company, setCompany] = useState('')
-  const [isInserted, setInserted] = useState()
+  const [isInserted, setInserted] = useState(false)
+  const [message, setMessage] = useState('')
 
   const SubmitEmployer = async(e)=>{
     //e.preventDefault() prevents the page from refreshing everytime i submit the form
@@ -22,7 +22,11 @@ function Employer(){
           body: JSON.stringify(body)
       });
       const data = await response.json()
-      setInserted(data.inserted)
+      if(data.message){
+        setInserted(true)
+        setMessage(data.message)
+      }
+      
     } catch (error) {
       console.log(error.message)
     }
@@ -75,10 +79,11 @@ function Employer(){
             <div className="col-12">
               {
                 isInserted ? <div class="alert alert-secondary text-center" role="alert">
-                Account created, <Link to="/login">Login</Link> now!
+                {message}
               </div> : 
-              <div>
-              </div>
+             <div>
+          
+           </div>
               }
               <button className="btn btn-primary w-100 py-3" type="submit">Sign Up</button>
             </div>
