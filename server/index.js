@@ -16,7 +16,6 @@ const Proposal = require('./models/proposal')
 const Contact = require('./models/Contact')
 const Admin = require('./models/Admin')
 //call the .env file
-const path = require('path')
 require('dotenv').config()
 
 
