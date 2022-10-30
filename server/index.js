@@ -320,12 +320,10 @@ router.post('/proposal', async(req, res)=>{
 router.get('/getproposal', async(req, res)=>{
     try {
         const session = sess;
-        const employer = await Employer.findOne({id: session.userid})
-        const id = employer._id
-        const job = await Job.findOne({employer: id})
-        const idjob = job._id
+        const employer = await Employer.findOne({id: session.userid});
 
-        const proposal = await Proposal.find({job: idjob}).populate('job').populate('employer').populate('employee').exec();
+
+        const proposal = await Proposal.find({employer: employer}).populate('job').populate('employer').populate('employee').exec();
         if(proposal){
         res.json({proposal: proposal, prop: true})}
     } catch (error) {

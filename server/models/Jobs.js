@@ -26,7 +26,6 @@ const job = new mongoose.Schema({
     employer:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "employer",
-        unique: true,
         required: true,
     },
     date:{
